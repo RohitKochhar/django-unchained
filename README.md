@@ -1,2 +1,1 @@
-# django-unchained
- Automated creation and containerization of Django applications
+![alt text](https://github.com/RohitKochhar/django-unchained/blob/main/logo.png?raw=true)
