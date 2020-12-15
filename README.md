@@ -5,15 +5,33 @@ a containerized app to make containerized apps
 
 ## Abstract
 
-`django-unchained` is a template engine for containerized [Django](https://www.djangoproject.com/) applications, all contained within it's own [Docker](https://www.docker.com) container, invoked by one call.
+`django-unchained` is a [Docker](https://www.docker.com) image used to create templated, containerized [Django](https://www.djangoproject.com/) applications, along with both a templated [Dockerfile](https://docs.docker.com/engine/reference/builder/) and templated [docker-compose](https://docs.docker.com/compose/) file 
 
-`django-unchained` is run as a Docker container hosted on Docker Hub. It will ask you some base questions about your project and then create a skeleton app along with both a Dockerfile and docker-compose.yml file, creating a containerized skeleton Django container within seconds.
+## How it works
+
+This is a systems-level overview of the package. For technical usage, look below.
+
+By executing the following command:
+
+`$ docker run -v $(pwd)/output:/output -it rohitrohitrohit/django-unchained`
+
+We are saying a few things:
+    - We are telling docker that we want to run the image rohitrohitrohit/django-unchained interactively (-it). 
+        - First, Docker checks if this image, rohitrohitrohit/django-unchained exists on your local machine. If it doesn't it is pulled from [Docker Hub](https://hub.docker.com/repository/docker/rohitrohitrohit/django-unchained).
+    - We are also telling docker that we want to share a volume (-v) with this image. That means that there will be a folder which contains data for both our Host and out image, the rest of the two systems are isolated.
+        - Here we are saying that the volume should be called `output` on both the host and container (host-location:container-location).
+        - We use $(pwd) since docker requires that the argument to the -v flag be an absolute path.
+
+Once this command is run, the image is retrieved remotely and then run interactively on your host machine. 
+    - When our container starts running, it will automatically execute `unchained.py`, which starts and waits for the users input.
+    - Once the user input is provided, the image will create the relevant files and skeleton app files and save them in the shared volume, which is `output` by default.
+    - After the files are created, the container exits and the files are available for the user in the `output` folder.
 
 ## Requirements
 
-All you need to have pre-installed to use this package is Docker. I'm not going to explain how to download Docker, since it is so well documented on their website. 
+All you need to have pre-installed to use this package is Docker. I'm not going to explain how to download Docker, since it is so well documented on their website.
 
-### Docker Installation
+### Docker Usage
 
 1. In your terminal (with Docker installed), run the following command:
 
@@ -51,4 +69,8 @@ We also have 1 folder. This folder will be named whatever input was given to the
 This is where you find you Django app. If you don't know what to do from here, Django has an amazing tutorial here on it's [website](https://docs.djangoproject.com/en/3.1/intro/tutorial01/). If you follow this tutorial, we have already completed the first steps in creating the project, and the step that contextually follows development after we have created our project is the step in which we run
 
 `python manage.py startapp polls`
+
+### Bug Reports
+
+Please report any bugs to rkochhar@uwaterloo.ca
 
