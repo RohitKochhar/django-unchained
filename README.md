@@ -16,15 +16,24 @@ By executing the following command:
 `$ docker run -v $(pwd)/output:/output -it rohitrohitrohit/django-unchained`
 
 We are saying a few things:
+
     - We are telling docker that we want to run the image rohitrohitrohit/django-unchained interactively (-it). 
-        - First, Docker checks if this image, rohitrohitrohit/django-unchained exists on your local machine. If it doesn't it is pulled from [Docker Hub](https://hub.docker.com/repository/docker/rohitrohitrohit/django-unchained).
+
+        - First, Docker checks if this image, rohitrohitrohit/django-unchained exists on your local machine. If it doesn't it is pulled from [Docker Hub](https://hub.docker.com/repository/docker/
+        rohitrohitrohit/django-unchained).
+
     - We are also telling docker that we want to share a volume (-v) with this image. That means that there will be a folder which contains data for both our Host and out image, the rest of the two systems are isolated.
+
         - Here we are saying that the volume should be called `output` on both the host and container (host-location:container-location).
+
         - We use $(pwd) since docker requires that the argument to the -v flag be an absolute path.
 
 Once this command is run, the image is retrieved remotely and then run interactively on your host machine. 
+
     - When our container starts running, it will automatically execute `unchained.py`, which starts and waits for the users input.
+
     - Once the user input is provided, the image will create the relevant files and skeleton app files and save them in the shared volume, which is `output` by default.
+
     - After the files are created, the container exits and the files are available for the user in the `output` folder.
 
 ## Requirements
@@ -52,6 +61,7 @@ The rest of this description will assumed you have name this folder `output`
 Here we have 2 files:
 
 - Dockerfile: This is the file which Docker reads to create our image. Each file here is an operation which we tell Docker to perform on some base OS image.
+
 - docker-compose.yml: This is a file which starts and configures multiple containers. Since this is only a template generator, only the simple app class is included at the start
 
 We also have 1 folder. This folder will be named whatever input was given to the container when step #1 was executed. This is our skeleton django app.
