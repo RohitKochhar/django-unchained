@@ -14,6 +14,8 @@ class Creator():
         # Store the working directory of this program
         self.s_cwd  = os.getcwd()
 
+        self.createRequirements()
+
         # We need to create a Django project (named by user) located in our current directory
         self.createDjangoProject()
 
@@ -71,6 +73,12 @@ class Creator():
         process = subprocess.Popen(a_BashCommand, stdout=subprocess.PIPE)
         output, error = process.communicate()
 
+    def createRequirements(self):
+        # Create the requirements file
+        f_Requirements  = open("./output/requirements.txt", "w")
+        f_Requirements.write("Django==3.1.3")
+        f_Requirements.close()
+
     def createDockerfile(self):
         # Create the dockerfile, append lines to it one at a time
         f_Dockerfile    = open("./output/Dockerfile", "w")
@@ -114,7 +122,7 @@ class Creator():
         f_DockerComposefile.write(f"        volumes:\n")
         f_DockerComposefile.write(f"            - ./{self.s_AppName}:/{self.s_AppName}\n")
         #       The closing command
-        f_DockerComposefile.write(f"        command: sh -c \"python app/manage.py runserver 0.0.0.0:8000\"\n")
+        f_DockerComposefile.write(f"        command: sh -c \"python manage.py runserver 0.0.0.0:8000\"\n")
         f_DockerComposefile.write(f"        environment:\n")
         f_DockerComposefile.write(f"            - DEBUG=1\n")
         f_DockerComposefile.write(f"\n")
