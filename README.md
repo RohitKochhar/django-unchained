@@ -46,6 +46,12 @@ All you need to have pre-installed to use this package is Docker. I'm not going 
 
 `$ docker run -v $(pwd)/output:/output -it rohitrohitrohit/django-unchained`
 
+If this results in an error of any kind, try the following command (you'll likely need to run this one if you're on Windows Command Prompt)
+
+`$ docker run -v "$(pwd)/output:/output" -it rohitrohitrohit/django-unchained`
+
+
+
 This will create a folder `output` in your current directory, and will ask you some questions about how to set up your Django app. You can leave them all blank for default answers. If you want to store the output files in another directory, say for example `django-app`, you would use the following command:
 
 **For steps below, it is assumed that all default prompts were selected in the previous step**
