@@ -3,7 +3,7 @@ import os, subprocess
 class Creator():
     s_DefaultAppName            = "app"
     s_DefaultImage              = "python:3.9-alpine"
-    s_DefaultTag                = "rohitrohitrohit/django-unchained"
+    s_DefaultTag                = ""
     s_DefaultComposeVersion     = "3.7"
     s_DefaultModuleName         = "module"
 
@@ -28,7 +28,6 @@ class Creator():
         if s_NameInput == "":
             print(f"\tNo input provided, using default app name: '{self.s_DefaultAppName}'")
             self.s_AppName  = self.s_DefaultAppName
-            return
         else:
             self.cleanNameInput(s_NameInput)
         s_TagInput  = input(f"Do you have a special tag for this container? (leave blank if not): ")
@@ -61,7 +60,12 @@ class Creator():
             raise ValueError(f"\napp name must only contain letters, you have provided: {s_NameInput}")
 
     def createDjangoProject(self):
-        s_BashCommand   = f"django-admin startproject {self.s_AppName}"
+        s_BashCommand   = f"mkdir ./output/{self.s_AppName}"
+        a_BashCommand   = s_BashCommand.split()
+
+        process = subprocess.Popen(a_BashCommand, stdout=subprocess.PIPE)
+        output, error = process.communicate()
+        s_BashCommand   = f"django-admin startproject {self.s_AppName} ./output/{self.s_AppName}"
         a_BashCommand   = s_BashCommand.split()
 
         process = subprocess.Popen(a_BashCommand, stdout=subprocess.PIPE)
@@ -69,7 +73,7 @@ class Creator():
 
     def createDockerfile(self):
         # Create the dockerfile, append lines to it one at a time
-        f_Dockerfile    = open("Dockerfile", "w")
+        f_Dockerfile    = open("./output/Dockerfile", "w")
         # This line is where we import our base image from
         f_Dockerfile.write(f"FROM {self.s_Image}\n")
         # In our base image, enter a new folder, app
@@ -91,7 +95,7 @@ class Creator():
 
     def createDockerCompose(self):
         # Create the docker-compose.yml file
-        f_DockerComposefile    = open("docker-compose.yml", "w")
+        f_DockerComposefile    = open("./output/docker-compose.yml", "w")
         # Set the version to the number provided by the user
         f_DockerComposefile.write(f"version: '{self.s_ComposeVersion}'\n")
         # Define our services
