@@ -78,7 +78,7 @@ We also have 1 folder. This folder will be named whatever input was given to the
 
 5. At this point, you can navigate into your app container, and start hacking!
 
-`cd app`
+`$ cd app`
 
 This is where you find you Django app. If you don't know what to do from here, Django has an amazing tutorial here on it's [website](https://docs.djangoproject.com/en/3.1/intro/tutorial01/). If you follow this tutorial, we have already completed the first steps in creating the project, and the step that contextually follows development after we have created our project is the step in which we run
 
