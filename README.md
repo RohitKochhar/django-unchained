@@ -13,7 +13,7 @@ This is a systems-level overview of the package. For technical usage, look below
 
 By executing the following command:
 
-`$ docker run -v $(pwd)/output:/output -it rohitrohitrohit/django-unchained`
+`$ docker run -v $(pwd)/unchained:/output -it rohitrohitrohit/django-unchained`
 
 We are saying a few things:
 
